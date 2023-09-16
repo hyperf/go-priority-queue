@@ -1,8 +1,3 @@
-# Priority Queue for Golang
-
-## How to use
-
-```go
 package main
 
 import (
@@ -18,5 +13,3 @@ func main() {
 
 	fmt.Print(queue.ToArray())
 }
-
-```
