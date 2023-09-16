@@ -1,4 +1,4 @@
-package go_priority_queue
+package priority_queue
 
 import (
 	"github.com/stretchr/testify/assert"
