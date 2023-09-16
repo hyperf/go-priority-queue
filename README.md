@@ -1,5 +1,13 @@
 # Priority Queue for Golang
 
+[![Test](https://github.com/hyperf/go-priority-queue/actions/workflows/test.yml/badge.svg)](https://github.com/hyperf/go-priority-queue/actions/workflows/test.yml)
+
+## How to install
+
+```shell
+go get -u github.com/hyperf/go-priority-queue
+```
+
 ## How to use
 
 ```go
