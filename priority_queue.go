@@ -10,19 +10,28 @@ type PriorityElement[T any] struct {
 }
 
 type PriorityQueue[T any] struct {
-	Elements []*PriorityElement[T]
+	elements []*PriorityElement[T]
+	priority int64
+}
+
+func NewPriorityQueue[T any]() *PriorityQueue[T] {
+	return &PriorityQueue[T]{}
 }
 
 func (q *PriorityQueue[T]) Insert(element T, priority int64) bool {
-	score := []int64{priority}
+	q.priority--
 
-	q.Elements = append(q.Elements, &PriorityElement[T]{Priority: score, Element: element})
+	score := []int64{priority, q.priority}
+
+	q.elements = append(q.elements, &PriorityElement[T]{Priority: score, Element: element})
 
 	return true
 }
 
 func (q *PriorityQueue[T]) Inserts(element T, priority []int64) bool {
-	q.Elements = append(q.Elements, &PriorityElement[T]{Priority: priority, Element: element})
+	q.priority--
+	priority = append(priority, q.priority)
+	q.elements = append(q.elements, &PriorityElement[T]{Priority: priority, Element: element})
 
 	return true
 }
@@ -33,12 +42,12 @@ func (q *PriorityQueue[T]) Sort() {
 	for q.Len() > 0 {
 		element = append(element, heap.Pop(q).(*PriorityElement[T]))
 	}
-	q.Elements = element
+	q.elements = element
 }
 
 func (q *PriorityQueue[T]) ToArray() []T {
 	q.Sort()
-	elements := q.Elements
+	elements := q.elements
 	var result []T
 	for _, element := range elements {
 		result = append(result, element.Element)
@@ -47,25 +56,25 @@ func (q *PriorityQueue[T]) ToArray() []T {
 }
 
 func (q *PriorityQueue[T]) Len() int {
-	return len(q.Elements)
+	return len(q.elements)
 }
 
 func (q *PriorityQueue[T]) Less(i, j int) bool {
-	return !lessThan(q.Elements[i].Priority, q.Elements[j].Priority)
+	return !lessThan(q.elements[i].Priority, q.elements[j].Priority)
 }
 
 func (q *PriorityQueue[T]) Swap(i, j int) {
-	q.Elements[i], q.Elements[j] = q.Elements[j], q.Elements[i]
+	q.elements[i], q.elements[j] = q.elements[j], q.elements[i]
 }
 
 func (q *PriorityQueue[T]) Push(x any) {
-	q.Elements = append(q.Elements, x.(*PriorityElement[T]))
+	q.elements = append(q.elements, x.(*PriorityElement[T]))
 }
 
 func (q *PriorityQueue[T]) Pop() any {
-	l := len(q.Elements)
-	x := q.Elements[l-1]
-	q.Elements = q.Elements[0 : l-1]
+	l := len(q.elements)
+	x := q.elements[l-1]
+	q.elements = q.elements[0 : l-1]
 	return x
 }
 
