@@ -18,6 +18,13 @@ func NewPriorityQueue[T any]() *PriorityQueue[T] {
 	return &PriorityQueue[T]{}
 }
 
+func (q *PriorityQueue[T]) Shift() T {
+	l := len(q.elements)
+	x := q.elements[0]
+	q.elements = q.elements[1:l]
+	return x.Element
+}
+
 func (q *PriorityQueue[T]) Insert(element T, priority int64) bool {
 	q.priority--
 
